@@ -1,0 +1,59 @@
+package savop;
+
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class main {
+
+    public final static int MAX_DEPUTADOS = 230;
+    public final static String FILE_DEPUTADOS = "Deputados.txt";
+    public final static String PAGINA_HTML = "Pagina.html";
+    public final static int MAX_LINHAS_PAGINA = 2;
+
+    Metodos MetodosObject = new Metodos();
+    Utilitarios UtilitariosObject = new Utilitarios();
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner in = new Scanner(System.in);
+        String[][] deputados = new String[MAX_DEPUTADOS][4];
+        int nDep = 0;
+        String op, idDeputado, fileName = null;
+        String[] depvotes = new String[MAX_DEPUTADOS];
+        do {
+            op = Utilitarios.menu(in);
+            switch (op) {
+                case "1":
+                    nDep = Metodos.lerInfoFicheiro(deputados);
+                    break;
+                case "2":
+                    Metodos.listPages(deputados, nDep, in);
+                    break;
+                case "3":
+                    System.out.println("Insira o ID do deputado:");
+                    idDeputado = in.nextLine();
+                    System.out.println("");
+                    Metodos.atualizarDeputado(idDeputado, deputados, nDep, in);
+                    System.out.println("");
+                    break;
+                case "4":
+                    System.out.println("Qual é o nome do ficheiro?");
+                    fileName = in.nextLine();
+                    depvotes = Metodos.readVotesFileInfo(depvotes,fileName, in);
+                    break;
+                case "5":
+                    Metodos.showInfoAlphabet(depvotes, deputados, nDep, in);
+                    break;
+                case "6":
+                    break;
+                case "7":
+                    Metodos.showInfoAge(fileName);
+                    break;
+                case "0":
+                    System.out.println("FIM");
+                    break;
+                default:
+                    System.out.println("Opção inválida, por favor insira outra.");
+            }
+        } while (!"0".equals(op));
+    }
+}
