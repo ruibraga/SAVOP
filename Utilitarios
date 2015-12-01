@@ -1,0 +1,69 @@
+ackage savop;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Scanner;
+
+public class Utilitarios {
+
+    public static String menu(Scanner in) {
+        System.out.println("Escolha uma opção:"
+                + "\n 1 - Ler ficheiro dos deputados"
+                + "\n 2 - Listar informação dos deputados"
+                + "\n 3 - Atualizar informações de um deputado"
+                + "\n 4 - Ler informação de uma votação"
+                + "\n 5 - Visualização da informação da votação selecionada"
+                + "\n 7 - Visualização dos resultados, consoante a faixa etária, da votação selecionada"
+                + "\n 0 - Terminar");
+        String op = in.next();
+        in.nextLine();
+        return op;
+    }
+
+    public static int Calculadora(String dataNasc) {
+        //Data de hoje
+        GregorianCalendar now = new GregorianCalendar();
+        int year = now.get(Calendar.YEAR);
+        int month = now.get(Calendar.MONTH) + 1;
+        int day = now.get(Calendar.DAY_OF_MONTH);
+
+        int anoNasc = 0, mesNasc = 0, diaNasc = 0;
+        //String dataNasc= "19970308" -> ex de parametro que é usado neste metodo
+        if (dataNasc != null) {
+            anoNasc = Integer.parseInt(dataNasc.substring(0, 4).trim());
+            mesNasc = Integer.parseInt(dataNasc.substring(4, 6).trim());
+            diaNasc = Integer.parseInt(dataNasc.substring(6).trim());
+        }
+        int age = year - anoNasc;
+        // Calcular difernças de mes e dia
+        if (month < mesNasc) {
+            age--;
+        } else {
+            if (month == mesNasc && day > diaNasc) {
+                age--;
+            }
+        }
+        return age;
+    }
+
+    public static void mostrarDataHoje() {
+        GregorianCalendar agora = new GregorianCalendar();
+        int ano = agora.get(Calendar.YEAR);
+        int mes = agora.get(Calendar.MONTH) + 1;
+        int dia = agora.get(Calendar.DAY_OF_MONTH);
+        System.out.println(ano + "-" + mes + "-" + dia);
+    }
+
+    public static String encontrarNomeApelido(String nome) {
+        String[] parcelas = nome.split(" ");
+        String nomeCurto = "";
+        if (nome != null) {
+            if (parcelas.length != 1) {
+                nomeCurto = parcelas[0] + " " + parcelas[parcelas.length - 1];
+            } else {
+                nomeCurto = parcelas[0];
+            }
+        }
+        return nomeCurto;
+    }
+}
